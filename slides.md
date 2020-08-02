@@ -72,7 +72,7 @@ Example 2
 
 > Pseudo-version control system
 
-<img src ="../images/patryk-gradys-4pPzKfd6BEg-unsplash.jpg" height="300px">
+<img src="../images/patryk-gradys-4pPzKfd6BEg-unsplash.jpg" height="300px">
 
 
 Implemented by creating files and directories as shown in observation 1
@@ -87,14 +87,15 @@ Implemented by creating files and directories as shown in observation 1
 ```
 
 
-
-(in IT "TEST" would contain unit tests to execute against the "product")
+In IT "TEST" would contain unit tests to execute against the "product"
 
 
 
 ### Observation 3
 
 >Where to start?
+
+<img src="../images/muhammad-haikal-sjukri-1NzJggtJ6j4-unsplash.jpg" height="300px">
 
 
 Python files
@@ -132,15 +133,32 @@ ModuleNotFoundError: No module named 'pandas
 ```
 
 
+Batch files are fine for Windows, but do not work under Linux
+
+```sh
+❯ ./pyCleaningDataContractsTrigger.bat
+./pyCleaningDataContractsTrigger.bat: 1: call: not found
+: not foundgDataContractsTrigger.bat: 2:
+: not foundgDataContractsTrigger.bat: 3: R:
+./pyCleaningDataContractsTrigger.bat: 4: cd: can't cd to R:GDMAD-BALLGEMEINDatenaustauschStorage
+': [Errno 2] No such file or directoryontracts.py
+: not foundgDataContractsTrigger.bat: 6:
+: not foundgDataContractsTrigger.bat: 7: pause
+```
+
+
 
 #### Observation 4
 
 >No dependency management
 
+<img src="../images/xavi-cabrera-kn-UmDZQDjM-unsplash.jpg" height="300px">
+
 
 - Providing source code is not sufficient
-- Used libraries need to be installed on target
-- Concept of virtual environments / requirements.txt
+  - Used libraries need to be available on target  _or_
+  - creation of a distribution  (e.g. setuptools)
+- Concept of virtual environments / `requirements.txt`
 - Eases life when moving from local machine to server
 
 
@@ -182,64 +200,50 @@ Is the code required for the report?
 
 #### Observation 6
 
->Encapsulation
+>Avoid re-inventing the wheel
 
+
+`GetDataAPI.py`
 
 ```python
-def API_to_DataFrame(url):
-    def unixtime_to_datetime(unixtime):
-        """Return datetime (UTC)for a given unixtime.
-        Parameters
-        ----------
-        unixtime: int
-        The unixtime to convert to datetime.◘
-        Returns
-        -------
-        datetime: datetime.datetime
-        The datetime (UTC) corresponding to the given unixtime.
-        """
-        dt = datetime.datetime(1970, 1, 1) + datetime.timedelta(0, unixtime)
-        return dt
+def unixtime_to_datetime(unixtime):
+  """Return datetime (UTC)for a given unixtime.
+  Parameters
+  ----------
+  unixtime: int
+  The unixtime to convert to datetime.
+  Returns
+  -------
+  datetime: datetime.datetime
+  The datetime (UTC) corresponding to the given unixtime.
+  """
+  dt = datetime.datetime(1970, 1, 1)
+       + datetime.timedelta(0, unixtime)
+  return dt
 ```
 
+
+Built-in function
+
+```python
+dt = datetime.fromtimestamp(unixtime, tz=timezone.utc)
+```
+
+
+Related questions
+
+- Documentation: `unixtime` in s or ms?
+
+- What is `0` and `unixtime` mapped to in `timedelta`?
+
+```python
+datetime.timedelta(days=0, seconds=unixtime)
+```
 
 
 #### Observation 7
 
->Avoid re-inventing the wheel
-
-
-In `GetDataAPI.py` we have
-
-```python
-def unixtime_to_datetime(unixtime):
-        """Return datetime (UTC)for a given unixtime.
-        Parameters
-        ----------
-        unixtime: int
-        The unixtime to convert to datetime.◘
-        Returns
-        -------
-        datetime: datetime.datetime
-        The datetime (UTC) corresponding to the given unixtime.
-        """
-        dt = datetime.datetime(1970, 1, 1) + datetime.timedelta(0, unixtime)
-        return dt
-```
-
-
-```python
-dt = datetime.datetime.fromtimestamp(0, tz=timezone.utc)
-```
-
-- Unix time in seconds or milliseconds? ms gives error
-- Sticking to ISO format?
-
-
-
-#### Observation 8
-
-Missing error handling & logging
+>Missing error handling & logging
 
 
 ```shell
@@ -254,6 +258,31 @@ Traceback (most recent call last):
     for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
 socket.gaierror: [Errno -2] Name or service not known
 ```
+
+
+
+#### Observation 8
+
+>No hardcoded endpoints and passwords
+
+<img src="../images/anita-jankovic-KGbX1f3Uxtg-unsplash.jpg" height="300px">
+
+
+- `Helper_Function_Storage_Report.py`
+Database user and password for SMART1P (production)
+
+- `Smart Reader.py`
+Database user for SMART
+
+- `Modena Reader.py`
+CAO Gas CE  RDS PostgreSQL
+Modena Database, admin user (?) `eit_adm` 
+
+- `MadbaseReader.py`
+MODNLYTC@GDM1D
+
+- `MAD_Price_Loader.py`
+- Madbase@ORCL3P  
 
 ### Remove unused code
 
@@ -410,13 +439,15 @@ EntsogReader.py:9:0: C0411: third party import "import pandas as pd" should be p
 
 - EntsogReader:
   - When executing
-```shell
+
+```sh
 Cannot compare tz-naive and tz-aware datetime-like objects
 ```
+
 - Removing unused imports
 - Remove default constructor
 - Removing commented out code
-- Fixing bad-whitspace
+- Fixing bad-whitespace
 
   - Wrong comments
 
@@ -440,10 +471,8 @@ if __name__ == "__main__":
 ```
 
 
-## Longest spaghetti (Measuring code quality)
+## Links
 
-## (Testing)
-
-## From spaghetti to penne (Refactoring)
-
-
+- [git](https://git-scm.com/)
+- [GitKraken](https://www.gitkraken.com/)
+- [How To Package Your Python Code](https://python-packaging.readthedocs.io/en/latest/)
