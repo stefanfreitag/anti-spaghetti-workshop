@@ -129,7 +129,7 @@ $ python3 Get_Report.py
 Traceback (most recent call last):
   File "Get_Report.py", line 1, in <module>
     import pandas as pd
-ModuleNotFoundError: No module named 'pandas
+ModuleNotFoundError: No module named 'pandas'
 ```
 
 
@@ -155,17 +155,20 @@ Batch files are fine for Windows, but do not work under Linux
 <img src="../images/xavi-cabrera-kn-UmDZQDjM-unsplash.jpg" height="300px">
 
 
-- Providing source code is not sufficient
-  - Used libraries need to be available on target  _or_
-  - creation of a distribution  (e.g. setuptools)
-- Concept of virtual environments / `requirements.txt`
-- Eases life when moving from local machine to server
+Providing source code is not sufficient
+
+- Used libraries need to be available on target  _or_
+- creation of a distribution<br>e.g. `setuptools`
+
+- Concept of virtual environments<br>e.g. `requirements.txt`
 
 
 
 #### Observation 5
 
 >Remove useless content and files
+
+<img src="../images/markus-spiske-JDFmHZpzJBw-unsplash.jpg" height="300px">
 
 
 `Prism_Engine.py`
@@ -190,17 +193,22 @@ commented out code<br>
 # # ...
 ```
 
-`PerfectExample.py`
 
+`PerfectExample.py`
 
 Missing `texture.png` file<br>
 Is the code required for the report?
+
+
+<img src="../images/perfect_example.png" height="500px">
 
 
 
 #### Observation 6
 
 >Avoid re-inventing the wheel
+
+<img src="../images/jon-cartagena-mmf7olkmhfw-unsplash.jpg" height="300px">
 
 
 `GetDataAPI.py`
@@ -241,6 +249,7 @@ datetime.timedelta(days=0, seconds=unixtime)
 ```
 
 
+
 #### Observation 7
 
 >Missing error handling & logging
@@ -268,56 +277,32 @@ socket.gaierror: [Errno -2] Name or service not known
 <img src="../images/anita-jankovic-KGbX1f3Uxtg-unsplash.jpg" height="300px">
 
 
-- `Helper_Function_Storage_Report.py`
-Database user and password for SMART1P (production)
+- `Helper_Function_Storage_Report.py`<br>Database user and password for SMART1P
 
-- `Smart Reader.py`
-Database user for SMART
-
-- `Modena Reader.py`
-CAO Gas CE  RDS PostgreSQL
-Modena Database, admin user (?) `eit_adm` 
-
-- `MadbaseReader.py`
-MODNLYTC@GDM1D
-
-- `MAD_Price_Loader.py`
-- Madbase@ORCL3P  
-
-### Remove unused code
+- `Smart Reader.py`<br>Database user for SMART
 
 
-- 'BackTester.py: Invalid indentation in line 1
-- `Get_Report.py: Is it used at all?
+- `Modena Reader.py`<br>CAO Gas CE  RDS PostgreSQL<br>Modena Database, user `eit_adm` 
+
+- `MadbaseReader.py`<br>MODNLYTC@GDM1D
 
 
-Cleaning Data.py
-
-```python
-# # import shutil
-# #
-# # dst_dir = "R:\\GD\MAD-B\\ALLGEMEIN\\04 STO\\Tableau Projects\\Storage Report Project\\New Storage Report\\"
-# # now = str(dt.datetime.now())[:19]
-# # now = '\\' + now.replace(":", "_")
-# #
-# # filename_dst1 = str(now) + r"Clean_Data.xlsx"
-# # dst_file1_dir = dst_dir + filename_dst1
-# #
-# # shutil.copy(wb_write_out, dst_file1_dir)
-# #
-#
-# # then solve UTC problem, then total problem then AGSI problem then perhaps write looping into class
-# # injection and withdrawal curve change only limited to today now
-# # injection and withdrawal curve change does not accumulate?
-# pass
-```
+- `MAD_Price_Loader.py`<br>Madbase@ORCL3P  
 
 
 
-## Recommendations
+### Recommendations
 
-- Store code & assets (required files) under version control
-  - git/ Stash/ Bitbucket
+
+
+#### Recommendation 1
+
+- Store code & assets under version control (git)
+- Use tools like Bitbucket
+
+
+#### Recommendation 2
+
   - gitignore file for __pycache__
 - Add a README.md
   - Details on installation/ usage/ dependencies
@@ -473,6 +458,7 @@ if __name__ == "__main__":
 
 ## Links
 
+- [Bitbucket](https://bitbucket.org/product/)
 - [git](https://git-scm.com/)
 - [GitKraken](https://www.gitkraken.com/)
 - [How To Package Your Python Code](https://python-packaging.readthedocs.io/en/latest/)
