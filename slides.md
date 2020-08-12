@@ -7,7 +7,7 @@
 
 - Limited Python expertise on my side
 - No one was talking me through the code
-- What is the input?
+- Input:
   - Files and folders in "Storage Report" folder
 
 
@@ -254,9 +254,11 @@ datetime.timedelta(days=0, seconds=unixtime)
 
 >Missing error handling & logging
 
+<img src="../images/esther-wechsler-Ty3C3cIRhug-unsplash.jpg" height="300px">
 
-```shell
-❯ python3 Get_Report.py
+
+```sh
+$ python3 Get_Report.py
 Traceback (most recent call last):
   File "/usr/lib/python3.8/urllib/request.py", line 1326, in do_open
     h.request(req.get_method(), req.selector, req.data, headers,
@@ -282,7 +284,7 @@ socket.gaierror: [Errno -2] Name or service not known
 - `Smart Reader.py`<br>Database user for SMART
 
 
-- `Modena Reader.py`<br>CAO Gas CE  RDS PostgreSQL<br>Modena Database, user `eit_adm` 
+- `Modena Reader.py`<br>CAO Gas CE  RDS PostgreSQL<br>Modena Database, user `eit_adm`
 
 - `MadbaseReader.py`<br>MODNLYTC@GDM1D
 
@@ -301,39 +303,60 @@ socket.gaierror: [Errno -2] Name or service not known
 - Use tools like Bitbucket
 
 
+
 #### Recommendation 2
 
-  - gitignore file for __pycache__
-- Add a README.md
-  - Details on installation/ usage/ dependencies
-- Replacing "print(xyz)" by usage of logger
-- Using virtual environments
+- Keep your repository clean
+  - Use a `.gitignore` file
+  - Content defines what _not_ enters the repository
+
+- Examples:
+  - `__pycache__`
+  - `pyc` files
+  - log files
+
+
+
+#### Recommendation 3
+
+Manage dependencies
+(virtual environments)
+
+
+Using virtual environments
 
 ```sh
 python3 -m venv /home/stefan/python/venv/anti_spaghetti
 source /home/stefan/python/venv/anti_spaghetti/bin/activate
 ```
 
-- Installation and freezing requirements
+
+Installation and freezing requirements
 
 ```sh
 pip3 install  <dependency>
+
 pip3 freeze > requirements.txt
 ```
 
-Later on another system:
+
+Later on another system, e.g.
 
 ```sh
 pip3 install -r requirements.txt
 ```
 
 
-- Use IT tools like
+
+#### Recommendation 4
+
+- Apply tools IT likes
+  - code formatter
   - code linter
-  - (static) code analysis
+  
 
 
-Linter on GetDataAPI.py:
+Linter output on `GetDataAPI.py`
 
 - trailing-whitespace
 - bad-indentation
@@ -344,34 +367,57 @@ Linter on GetDataAPI.py:
 - wrong-import-order
 
 
-Linter on EntsogReader.py:
+Linter on `EntsogReader.py`
+
 ```sh
 Your code has been rated at -15.29/10
 ```
 
-ToDo:
-
-- Python Naming of methods
-- black: Black is a really useful code formatting tool maintained by the Python Software Foundation. It reformats files to improve
-readability
-- Propose improvements
-- "xlwings requires an installation of Excel and therefore only works on Windows and macOS. To enable the installation on Linux nevertheless, do: export INSTALL_ON_LINUX=1; pip install xlwings" => can we use another library to make it work on Linux (pyexcel, openpyxl)
-- Can we use csv instead of Excel?
 
 
-- CleaningData.py: Separation of logical blocks by ###########################################
-- What does `PerfectExample.py` do?
-  - File `texture.png` is missing
-  - `AttributeError: module 'time' has no attribute 'clock'`, deprecated since Python 3.3?
+#### Recommendation 5
+
+Take your decision wisely
+
+
+Some libraries have dependencies on the OS
+
+> xlwings requires an installation of Excel and therefore only works on Windows and macOS.
+
+
+- Moving the Python code e.g. to Cloud or Linux boxes could get complicated
+- Can we use `pyexcel`, `openpyxl` or just `csv`?
 
 
 
-## Example EntsogReader.py
+## Lunchtime over
+
+<img src="../images/richard-bell-NXHwphKj1Yc-unsplash.jpg" height="300px">
 
 
+
+## Links
+
+- [Bitbucket](https://bitbucket.org/product/)
+- [Black](https://github.com/psf/black)
+- [git](https://git-scm.com/)
+- [GitKraken](https://www.gitkraken.com/)
+- [How To Package Your Python Code](https://python-packaging.readthedocs.io/en/latest/)
+- [Pylint](https://github.com/PyCQA/pylint)
+
+
+
+## Backup slides
+
+
+
+### Example EntsogReader.py
+
+```sh
 pylint score
 
 > Your code has been rated at -15.69/10
+```
 
 
 Constructor Comment
@@ -403,62 +449,33 @@ Commented out code
 
 Running  black
 
-
-❯ black  --target-version=py37 EntsogReader.py
+```sh
+$ black  --target-version=py37 EntsogReader.py
 
 Your code has been rated at 3.30/10 (previous run: -16.20/10, +19.50)
+```
 
 
 Removing unused import
 
+```sh
 EntsogReader.py:1:0: W0611: Unused import os (unused-import)
 EntsogReader.py:6:0: W0611: Unused import cx_Oracle (unused-import)
+```
 
 
 Fixing import order
 
+```sh
 EntsogReader.py:6:0: C0411: standard import "import datetime" should be placed before "from DataReader.AbstractDataReader import AbstractDataReader" (wrong-import-order)
 EntsogReader.py:7:0: C0411: third party import "import dateutil.parser" should be placed before "from DataReader.AbstractDataReader import AbstractDataReader" (wrong-import-order)
 EntsogReader.py:8:0: C0411: third party import "import requests" should be placed before "from DataReader.AbstractDataReader import AbstractDataReader" (wrong-import-order)
 EntsogReader.py:9:0: C0411: third party import "import pandas as pd" should be placed before "from DataReader.AbstractDataReader import AbstractDataReader" (wrong-import-order)
+```
 
-- EntsogReader:
-  - When executing
+
+When executing
 
 ```sh
 Cannot compare tz-naive and tz-aware datetime-like objects
 ```
-
-- Removing unused imports
-- Remove default constructor
-- Removing commented out code
-- Fixing bad-whitespace
-
-  - Wrong comments
-
-```python
-class EntsogReader(AbstractDataReader):
-    """base class to get data from SMART"""
-    def __init__(self):
-       pass
-```
-
-
-- OptiReader:
-
-```python
-def main():
-    pass
-
-
-if __name__ == "__main__":
-    main()
-```
-
-
-## Links
-
-- [Bitbucket](https://bitbucket.org/product/)
-- [git](https://git-scm.com/)
-- [GitKraken](https://www.gitkraken.com/)
-- [How To Package Your Python Code](https://python-packaging.readthedocs.io/en/latest/)
