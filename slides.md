@@ -3,16 +3,35 @@
 # Anti Spaghetti Workshop
 
 
+
+## What this is about
+
+- ~~Finger pointing~~ <!-- .element: class="fragment" data-fragment-index="1" -->
+- ~~Blaming~~  <!-- .element: class="fragment" data-fragment-index="1" -->
+
+- Completely biased observations<!-- .element: class="fragment" data-fragment-index="2" -->
+- Food for thoughts <!-- .element: class="fragment" data-fragment-index="3" -->
+
+
+
 ## Starting point
 
-- Limited Python expertise on my side
-- No one was talking me through the code
-- Input:
-  - Files and folders in "Storage Report" folder
+- "Storage Report" project on business side <!-- .element: class="fragment" data-fragment-index="1" -->
+- Files and folders belonging to the project <!-- .element: class="fragment" data-fragment-index="2" -->
+- Basic Python knowledge on my side <!-- .element: class="fragment" data-fragment-index="3" -->
+- No one talking me through the code <!-- .element: class="fragment" data-fragment-index="4" -->
 
+Note:
+
+- Working on existing project with no hand over
 
 
 ## Observations
+
+Note:
+
+- A "pattern" I noticed and one or two examples
+- Do you find yourself in those pattern?
 
 
 
@@ -86,8 +105,11 @@ Implemented by creating files and directories as shown in observation 1
 
 ```
 
-
-In IT "TEST" would contain unit tests to execute against the "product"
+- Possible reasons
+  - Accidentally deletion of files
+  - Refactoring
+- Differences between copy and original file increase over time
+- In the IT world "TEST" would contain e.g. unit tests (later more)
 
 
 
@@ -408,6 +430,125 @@ Some libraries have dependencies on the OS
 
 
 ## Backup slides
+
+
+
+### Outlook
+
+
+#### Unit testing
+
+
+unittest
+
+- Included in the Python standard library
+- API will be familiar to anyone who has used JUnit/nUnit/CppUnit
+- Gives confidence to not break existing functionality
+
+
+Creating test cases is accomplished by subclassing unittest.TestCase
+
+```python
+import unittest
+
+def fun(x):
+    return x + 1
+
+class MyTest(unittest.TestCase):
+    def test(self):
+        self.assertEqual(fun(3), 4)
+```
+
+(Source: https://docs.python-guide.org/writing/tests/)
+
+
+Example: MeritO User Sight Transformer
+
+``` python
+ def test_convert_to_report_strategic_sales(self):
+        with open("strategic_sales.xml", "r") as file:
+            text = file.read()
+            sights = converter.extract_sights(text)
+            owner = Owner(name="Backoffice", uuid=str(uuid.uuid4()))
+            reports = converter.convert_to_report(sights, owner)
+            report = next(iter(reports))
+            self.assertCountEqual(
+                {
+                    "a920b071-f91c-478f-bc47-0a9a72e4638c-thirdparty_delivery_obo_evonik_engienew",
+                    "a920b071-f91c-478f-bc47-0a9a72e4638c-thirdparty_delivery_obo_evonik_wingas",
+                    "6f455429-0020-4ce2-89df-865e1a0b20b3-balancingEnergy",
+                    "1bb97746-541a-43d8-8e91-cd3b69ddafac-balancingEnergy",
+                },
+                map(lambda item: item.time_series_id, report.items),
+            )
+```
+
+
+#### Python & remote execution
+
+- Python code often executed on local machine
+  - Desktop, not always on
+  - limited access by others (restarting service etc) 
+- Options for execution on remote systems
+  - Containers
+  - Cloud
+  - Serverless
+
+
+
+Hello World
+
+```python
+from flask import Flask
+
+server = Flask(__name__)
+
+@server.route("/")
+def hello():
+    return "Hello World!"
+
+if __name__ == "__main__":
+    server.run(host="0.0.0.0")
+```
+
+
+
+Dockerfile
+
+```python
+# first stage
+FROM python:3.8 AS builder
+COPY requirements.txt .
+
+# install dependencies to the local user directory (eg. /root/.local)
+RUN pip install --user -r requirements.txt
+
+# second unnamed stage
+FROM python:3.8-slim
+WORKDIR /code
+
+# copy only the dependencies installation from the 1st stage image
+COPY --from=builder /root/.local/ /root/.local
+COPY ./src .
+
+# update PATH environment variable
+ENV PATH=/root/.local/bin:$PATH
+
+CMD [ "python", "./server.py" ]
+```
+
+
+Creating a Docker image and running a container 
+
+```sh
+docker build -t flask-hello-world .
+
+
+docker run -d -p 5000:5000 flask-hello-world:latest
+0c362cfed041d0580386e0b7ef24c18317a378a8319744d38f8b81ddf82d3c02
+```
+
+
 
 
 
