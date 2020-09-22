@@ -26,6 +26,7 @@ Note:
 - Working on existing project with no hand over
 
 
+
 ## Observations
 
 Note:
@@ -39,7 +40,7 @@ Note:
 
 >Multiple versions of same file in different folders
 
-<img src ="../images/agnieszka-kowalczyk-c0VRNWVEjOA-unsplash.jpg" height="300px">
+![image info](../images/agnieszka-kowalczyk-c0VRNWVEjOA-unsplash.jpg)<!-- .element height="375px" -->
 
 
 #### Identical naming
@@ -91,7 +92,7 @@ Example 2
 
 > Pseudo-version control system
 
-<img src="../images/patryk-gradys-4pPzKfd6BEg-unsplash.jpg" height="300px">
+![image info](../images/patryk-gradys-4pPzKfd6BEg-unsplash.jpg)<!-- .element height="375px" -->
 
 
 Implemented by creating files and directories as shown in observation 1
@@ -105,10 +106,14 @@ Implemented by creating files and directories as shown in observation 1
 
 ```
 
+
 - Possible reasons
-  - Accidentally deletion of files
+  - Backup in case of accidental deletion
   - Refactoring
 - Differences between copy and original file increase over time
+
+Note:
+
 - In the IT world "TEST" would contain e.g. unit tests (later more)
 
 
@@ -117,7 +122,7 @@ Implemented by creating files and directories as shown in observation 1
 
 >Where to start?
 
-<img src="../images/muhammad-haikal-sjukri-1NzJggtJ6j4-unsplash.jpg" height="300px">
+![image info](../images/muhammad-haikal-sjukri-1NzJggtJ6j4-unsplash.jpg)<!-- .element height="375px" -->
 
 
 Python files
@@ -136,18 +141,24 @@ Batch files
 ```
 
 
-Independent of the Python file I use as an entry point, errors pop up.
+For all Python files I tried as entry point
+
+errors popped up. <!-- .element: class="fragment" data-fragment-index="2" -->
+
 
 ```sh
 $ python3 NewStorageReportPython.py
+
 Traceback (most recent call last):
   File "NewStorageReportPython.py", line 1, in <module>
     import xlwings as xw
 ModuleNotFoundError: No module named 'xlwings'
 ```
 
+
 ```sh
 $ python3 Get_Report.py
+
 Traceback (most recent call last):
   File "Get_Report.py", line 1, in <module>
     import pandas as pd
@@ -155,7 +166,12 @@ ModuleNotFoundError: No module named 'pandas'
 ```
 
 
-Batch files are fine for Windows, but do not work under Linux
+Batch files are fine when running Windows,
+
+but do not work under Linux<!-- .element: class="fragment" data-fragment-index="2" -->
+
+![image info](../images/tux.png)<!-- .element: class="fragment" data-fragment-index="2" height="300xp"-->
+
 
 ```sh
 ❯ ./pyCleaningDataContractsTrigger.bat
@@ -174,15 +190,14 @@ Batch files are fine for Windows, but do not work under Linux
 
 >No dependency management
 
-<img src="../images/xavi-cabrera-kn-UmDZQDjM-unsplash.jpg" height="300px">
+![image info](../images/xavi-cabrera-kn-UmDZQDjM-unsplash.jpg)<!-- .element height="375px" -->
 
 
 Providing source code is not sufficient
 
-- Used libraries need to be available on target  _or_
-- creation of a distribution<br>e.g. `setuptools`
-
-- Concept of virtual environments<br>e.g. `requirements.txt`
+- Used libraries need to be available on target
+- creation of a distribution
+- Concept of virtual environments
 
 
 
@@ -190,7 +205,10 @@ Providing source code is not sufficient
 
 >Remove useless content and files
 
-<img src="../images/markus-spiske-JDFmHZpzJBw-unsplash.jpg" height="300px">
+![image info](../images/markus-spiske-JDFmHZpzJBw-unsplash.jpg)<!-- .element height="375px" -->
+
+
+Partially related to observation 1 and 2
 
 
 `Prism_Engine.py`
@@ -222,7 +240,10 @@ Missing `texture.png` file<br>
 Is the code required for the report?
 
 
-<img src="../images/perfect_example.png" height="500px">
+![image info](../images/perfect_example.png)<!-- .element height="500px" -->
+
+
+&rarr; No!
 
 
 
@@ -230,7 +251,7 @@ Is the code required for the report?
 
 >Avoid re-inventing the wheel
 
-<img src="../images/jon-cartagena-mmf7olkmhfw-unsplash.jpg" height="300px">
+![image info](../images/jon-cartagena-mmf7olkmhfw-unsplash.jpg)<!-- .element height="375px" -->
 
 
 `GetDataAPI.py`
@@ -260,6 +281,17 @@ dt = datetime.fromtimestamp(unixtime, tz=timezone.utc)
 ```
 
 
+Python docs:
+
+```plain
+classmethod datetime.fromtimestamp(timestamp, tz=None)¶
+```
+
+Return the local date and time corresponding to the POSIX timestamp, [...].
+
+If optional argument `tz` is `None` or not specified, the timestamp is converted to the platform’s local date and time, and the returned datetime object is naive.
+
+
 Related questions
 
 - Documentation: `unixtime` in s or ms?
@@ -276,11 +308,20 @@ datetime.timedelta(days=0, seconds=unixtime)
 
 >Missing error handling & logging
 
-<img src="../images/esther-wechsler-Ty3C3cIRhug-unsplash.jpg" height="300px">
+![image info](../images/esther-wechsler-Ty3C3cIRhug-unsplash.jpg)<!-- .element height="375px" -->
 
+
+In `Get_Report.py` a client
+
+- connects to a remote server and
+- fetches data for further processing
+
+
+If the server is not reachable this is returned
 
 ```sh
 $ python3 Get_Report.py
+
 Traceback (most recent call last):
   File "/usr/lib/python3.8/urllib/request.py", line 1326, in do_open
     h.request(req.get_method(), req.selector, req.data, headers,
@@ -293,12 +334,19 @@ socket.gaierror: [Errno -2] Name or service not known
 ```
 
 
+Difficult to understand what failed. Helpful details
+
+- host
+- endpoint
+- (parameter)
+
+
 
 #### Observation 8
 
 >No hardcoded endpoints and passwords
 
-<img src="../images/anita-jankovic-KGbX1f3Uxtg-unsplash.jpg" height="300px">
+![image info](../images/anita-jankovic-KGbX1f3Uxtg-unsplash.jpg)<!-- .element height="375px" -->
 
 
 - `Helper_Function_Storage_Report.py`<br>Database user and password for SMART1P
@@ -323,6 +371,7 @@ socket.gaierror: [Errno -2] Name or service not known
 
 - Store code & assets under version control (git)
 - Use tools like Bitbucket
+- If access is missing &rarr; please ask IT
 
 
 
@@ -330,12 +379,7 @@ socket.gaierror: [Errno -2] Name or service not known
 
 - Keep your repository clean
   - Use a `.gitignore` file
-  - Content defines what _not_ enters the repository
-
-- Examples:
-  - `__pycache__`
-  - `pyc` files
-  - log files
+  - Content defines what _not_ enters the repository<br>Examples: `__pycache__`, `pyc` & log files
 
 
 
@@ -345,37 +389,69 @@ Manage dependencies
 (virtual environments)
 
 
+Use case
+
+- Application require
+  - packages and modules that don’t come as part of the standard library
+  - sometimes a specific version of a library (fix/ feature)
+
+&#8623; One Python installation may not be able to meet the requirements of every application
+
+
+Virtual environment
+
+> self-contained directory tree that contains a Python installation for a particular version of Python, plus a number of additional packages.
+
+- Different applications can then use different virtual environments
+
+
 Using virtual environments
+
+Creation
 
 ```sh
 python3 -m venv /home/stefan/python/venv/anti_spaghetti
+```
+
+Activation
+
+```sh
 source /home/stefan/python/venv/anti_spaghetti/bin/activate
 ```
 
 
-Installation and freezing requirements
+Installing and freezing requirements
 
 ```sh
-pip3 install  <dependency>
+pip3 install pandas numpy keras
 
 pip3 freeze > requirements.txt
 ```
 
 
-Later on another system, e.g.
+Content of `requirements.txt`
 
-```sh
-pip3 install -r requirements.txt
+```plain
+cx-Oracle==8.0.0
+DateTime==4.3
+numpy==1.19.0
+pandas==1.0.5
+pyglet==1.5.7
+requests==2.24.0
+...
+
 ```
 
 
 
 #### Recommendation 4
 
-- Apply tools IT likes
-  - code formatter
-  - code linter
+Apply tools likes
+
+- code formatter
+- code linter
   
+(A linter is a small program that checks code for stylistic or programming errors)
 
 
 Linter output on `GetDataAPI.py`
@@ -396,6 +472,15 @@ Your code has been rated at -15.29/10
 ```
 
 
+Running  black
+
+```sh
+$ black  --target-version=py37 EntsogReader.py
+
+Your code has been rated at 3.30/10 (previous run: -16.20/10, +19.50)
+```
+
+
 
 #### Recommendation 5
 
@@ -407,36 +492,14 @@ Some libraries have dependencies on the OS
 > xlwings requires an installation of Excel and therefore only works on Windows and macOS.
 
 
-- Moving the Python code e.g. to Cloud or Linux boxes could get complicated
-- Can we use `pyexcel`, `openpyxl` or just `csv`?
+- Moving Python code e.g. to Cloud or Linux boxes could get complicated
+- Could we use `pyexcel`, `openpyxl` or just `csv` files?
 
 
 
-## Lunchtime over
+#### Recommendation 6
 
-<img src="../images/richard-bell-NXHwphKj1Yc-unsplash.jpg" height="300px">
-
-
-
-## Links
-
-- [Bitbucket](https://bitbucket.org/product/)
-- [Black](https://github.com/psf/black)
-- [git](https://git-scm.com/)
-- [GitKraken](https://www.gitkraken.com/)
-- [How To Package Your Python Code](https://python-packaging.readthedocs.io/en/latest/)
-- [Pylint](https://github.com/PyCQA/pylint)
-
-
-
-## Backup slides
-
-
-
-### Outlook
-
-
-#### Unit testing
+Test your code
 
 
 unittest
@@ -484,19 +547,47 @@ Example: MeritO User Sight Transformer
 ```
 
 
+
+## Lunchtime over
+
+![image info](../images/richard-bell-NXHwphKj1Yc-unsplash.jpg)<!-- .element height="375px" -->
+
+
+
+## Links
+
+- [Bitbucket](https://bitbucket.org/product/)
+- [Black](https://github.com/psf/black)
+- [git](https://git-scm.com/)
+- [GitKraken](https://www.gitkraken.com/)
+- [How To Package Your Python Code](https://python-packaging.readthedocs.io/en/latest/)
+- [Pylint](https://github.com/PyCQA/pylint)
+
+
+
+## Backup slides
+
+
+
+### Outlook
+
+
+
+
 #### Python & remote execution
 
 - Python code often executed on local machine
-  - Desktop, not always on
-  - limited access by others (restarting service etc) 
+  - not always powered on
+  - limited access by others
+  - scheduled execution of code "challenging"
 - Options for execution on remote systems
-  - Containers
-  - Cloud
-  - Serverless
+  - Server/ EC2 instances
+  - Containerized
+  - Serverless (Lambda functions)
+  
 
 
-
-Hello World
+Hello World - Containerized
 
 ```python
 from flask import Flask
@@ -510,7 +601,6 @@ def hello():
 if __name__ == "__main__":
     server.run(host="0.0.0.0")
 ```
-
 
 
 Dockerfile
@@ -538,85 +628,23 @@ CMD [ "python", "./server.py" ]
 ```
 
 
-Creating a Docker image and running a container 
+Creating a Docker image
 
 ```sh
 docker build -t flask-hello-world .
+```
 
 
+Starting a container
+
+```sh
 docker run -d -p 5000:5000 flask-hello-world:latest
 0c362cfed041d0580386e0b7ef24c18317a378a8319744d38f8b81ddf82d3c02
 ```
 
 
-
-
-
-### Example EntsogReader.py
+Sending data to the container
 
 ```sh
-pylint score
-
-> Your code has been rated at -15.69/10
-```
-
-
-Constructor Comment
-
-```python
-"""base class to get data from SMART"""
-```
-
-
-"Empty" constructor
-
-```python
- def __init__(self):
-       pass
-```
-
-
-Commented out code
-(Indentation)
-
-```python
-   def getUrl(self,entry, exit , indicator,periodtype, start_date, end_date):
-            #exit = self.configuration.at[ticker,'POINT_EXIT']
-            #entry = self.configuration.at[ticker,'POINT_EXIT']
-            #indicator=self.configuration.at[ticker,'INDICATOR']
-            result = 'https://transparency.entsog.eu/api/v1/operationalData?forceDownload=true&pointDirection='
-```
-
-
-Running  black
-
-```sh
-$ black  --target-version=py37 EntsogReader.py
-
-Your code has been rated at 3.30/10 (previous run: -16.20/10, +19.50)
-```
-
-
-Removing unused import
-
-```sh
-EntsogReader.py:1:0: W0611: Unused import os (unused-import)
-EntsogReader.py:6:0: W0611: Unused import cx_Oracle (unused-import)
-```
-
-
-Fixing import order
-
-```sh
-EntsogReader.py:6:0: C0411: standard import "import datetime" should be placed before "from DataReader.AbstractDataReader import AbstractDataReader" (wrong-import-order)
-EntsogReader.py:7:0: C0411: third party import "import dateutil.parser" should be placed before "from DataReader.AbstractDataReader import AbstractDataReader" (wrong-import-order)
-EntsogReader.py:8:0: C0411: third party import "import requests" should be placed before "from DataReader.AbstractDataReader import AbstractDataReader" (wrong-import-order)
-EntsogReader.py:9:0: C0411: third party import "import pandas as pd" should be placed before "from DataReader.AbstractDataReader import AbstractDataReader" (wrong-import-order)
-```
-
-
-When executing
-
-```sh
-Cannot compare tz-naive and tz-aware datetime-like objects
+curl -F 'file=@8712842.decoded' -i http://localhost:5000/converter\?owner_uuid\=123
 ```
